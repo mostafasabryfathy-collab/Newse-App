@@ -5,7 +5,7 @@ import 'package:news_app_ui_setup/widgets/news_serves.dart';
 import 'package:news_app_ui_setup/widgets/newslistview.dart';
 
 class NewsListviewbilder extends StatefulWidget {
-  const NewsListviewbilder({
+   const NewsListviewbilder({
     super.key,
   });
 
@@ -13,40 +13,62 @@ class NewsListviewbilder extends StatefulWidget {
   State<NewsListviewbilder> createState() => _NewsListviewbilderState();
 }
 
-List<ArticleModel> articles = [];
-
+ var future;
 class _NewsListviewbilderState extends State<NewsListviewbilder> {
   @override
   void initState() {
-    getGeneralNews();
-
+   
     super.initState();
-  }
 
-  bool isLoading = true;
+  future =   NewsServices(Dio()).getNews();
 
-  Future<dynamic> getGeneralNews() async {
-    articles = await NewsServices(Dio()).getNews();
-    isLoading = false;
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const SliverFillRemaining(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-        : articles.isNotEmpty
-            ? NewsListView(
-                articles: articles,
-              )
-            : const SliverToBoxAdapter(
-                child: Center(
-                  child: Text('No News Found'),
-                ),
-              );
+    return FutureBuilder<List<ArticleModel>>(
+      future: future,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return NewsListView(
+            articles: snapshot.data!,
+          );
+        } else if (snapshot.hasError) {
+      return const MessageError();
+    } else {
+      return const CircularIndicator();
+    }
+  });
+
+ }
+}
+
+class CircularIndicator extends StatelessWidget {
+  const CircularIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverFillRemaining(
+      child: Center(
+        child: CircularProgressIndicator(backgroundColor: Colors.orange,),
+      ),
+    );
+  }
+}
+
+class MessageError extends StatelessWidget {
+  const MessageError({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverToBoxAdapter(
+      child: Center(
+        child: Text('Error fetching news'),
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:news_app_ui_setup/models/category_model.dart';
+import 'package:news_app_ui_setup/views/category_view.dart';
 import 'package:news_app_ui_setup/widgets/category_card.dart';
 
 // ignore: must_be_immutable
