@@ -6,8 +6,9 @@ import 'package:news_app_ui_setup/widgets/newslistview.dart';
 
 class NewsListviewbilder extends StatefulWidget {
    const NewsListviewbilder({
-    super.key,
+    super.key, required this.category,
   });
+ final String category ;
 
   @override
   State<NewsListviewbilder> createState() => _NewsListviewbilderState();
@@ -20,7 +21,7 @@ class _NewsListviewbilderState extends State<NewsListviewbilder> {
    
     super.initState();
 
-  future =   NewsServices(Dio()).getNews();
+  future =   NewsServices(Dio()).getNews(category:widget.category);
 
   }
 

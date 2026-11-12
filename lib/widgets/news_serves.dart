@@ -7,10 +7,10 @@ class NewsServices {
 
   NewsServices(this.dio);
 
- Future<List<ArticleModel>> getNews() async {
+ Future<List<ArticleModel>> getNews({required String category}) async {
     try {
       var response = await dio.get(
-          'https://newsapi.org/v2/top-headlines?country=us&apiKey=43efe50948374074a9883fcfa791d851');
+          'https://newsapi.org/v2/top-headlines?country=us&apiKey=43efe50948374074a9883fcfa791d851&category=$category');
       Map<String, dynamic> jsondata = response.data;
       List<dynamic> articles = jsondata['articles'];
       
