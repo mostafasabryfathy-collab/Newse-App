@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app_ui_setup/models/article_model.dart';
+import 'package:news_app_ui_setup/widgets/wepview.dart';
 
 // cached network image
 class NewsTile extends StatelessWidget {
@@ -15,17 +16,28 @@ class NewsTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.network(
-            articleModel.imageUrl ?? '',
-            height: 200,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return WebViewPage(articleModel: articleModel);
+                  },
+                ),
+              );
+            },
+            child: Image.network(
+              articleModel.imageUrl ?? '',
               height: 200,
               width: double.infinity,
-              color: Colors.grey.shade300,
-              child: const Icon(Icons.image_not_supported,
-                  size: 55, color: Colors.grey),
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 200,
+                width: double.infinity,
+                color: Colors.grey.shade300,
+                child: const Icon(Icons.image_not_supported,
+                    size: 55, color: Colors.grey),
+              ),
             ),
           ),
         ),
