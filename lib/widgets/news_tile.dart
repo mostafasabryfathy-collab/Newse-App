@@ -11,21 +11,21 @@ class NewsTile extends StatelessWidget {
   final ArticleModel articleModel;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return WebViewPage(articleModel: articleModel);
-                  },
-                ),
-              );
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return WebViewPage(articleModel: articleModel);
             },
+          ),
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
             child: Image.network(
               articleModel.imageUrl ?? '',
               height: 200,
@@ -40,30 +40,37 @@ class NewsTile extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        Text(
-          articleModel.title ?? '',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+          const SizedBox(
+            height: 12,
           ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          articleModel.description ?? '',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(color: Colors.grey, fontSize: 14),
-        )
-      ],
+          Text(
+            articleModel.title ?? '',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            articleModel.description ?? '',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+          const Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 }

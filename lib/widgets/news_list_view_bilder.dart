@@ -5,25 +5,25 @@ import 'package:news_app_ui_setup/widgets/news_serves.dart';
 import 'package:news_app_ui_setup/widgets/newslistview.dart';
 
 class NewsListviewbilder extends StatefulWidget {
-   const NewsListviewbilder({
-    super.key, required this.category,
-  });
- final String category ;
+  const NewsListviewbilder({super.key, this.category, this.query});
+  final String? category;
+  final String? query;
 
   @override
   State<NewsListviewbilder> createState() => _NewsListviewbilderState();
 }
 
- var future;
 class _NewsListviewbilderState extends State<NewsListviewbilder> {
+  late Future<List<ArticleModel>> future;  
+
   @override
   void initState() {
-   
     super.initState();
-
-  future =   NewsServices(Dio()).getNews(category:widget.category);
-
-  }
+    future = NewsServices(Dio())
+        .getNews(category: widget.category, query: widget.query);
+  
+ 
+}
 
   @override
   Widget build(BuildContext context) {

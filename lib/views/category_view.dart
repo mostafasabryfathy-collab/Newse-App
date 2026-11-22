@@ -8,6 +8,9 @@ class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(category),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
 
