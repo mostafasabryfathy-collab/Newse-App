@@ -26,10 +26,14 @@ class CategoryCard extends StatelessWidget {
         margin: const EdgeInsets.only(right: 10),
         width: 140,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(14),
           image: DecorationImage(
             image: AssetImage(categoryModel.image),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.45),
+              BlendMode.darken,
+            ),
           ),
         ),
         child: Center(
@@ -37,7 +41,7 @@ class CategoryCard extends StatelessWidget {
             categoryModel.categoryName,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),

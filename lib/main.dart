@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:news_app_ui_setup/views/home_view.dart';
+import 'package:news_app_ui_setup/views/splash_view.dart';
 
 void main() {
   
@@ -21,7 +20,7 @@ class NewsApp extends StatelessWidget {
         },
       ),
       debugShowCheckedModeBanner: false,
-      home:  const HomeView(),
+      home:  const SplashView(),
     );
   }
 }
