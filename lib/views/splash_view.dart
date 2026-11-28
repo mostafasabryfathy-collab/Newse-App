@@ -18,40 +18,46 @@ void initState() {
 }
 
 Future<void> _loadData() async {
-  final service = NewsServices(Dio());
-  const categories = [
-    'general', 'technology', 'health',
-    'science', 'entertainment', 'sports', 'business',
-  ];
-
-
   await Future.wait([
-    ...categories.map((c) => service.getNews(category: c)),
-    Future.delayed(const Duration(seconds: 2)),
+    Future.delayed(const Duration(seconds: 2)),  
+    _preload().timeout(
+      const Duration(seconds: 7),                 
+      onTimeout: () {},
+    ),
   ]);
-
-  if (!mounted) return;
-
-
-  for (final img in ['technology', 'health', 'science',
-      'entertaiment', 'business']) {
-    await precacheImage(AssetImage('assets/$img.jpeg'), context);
-  }
-
-  
-  final general = await service.getNews(category: 'general');
-  for (final a in general.take(8)) {
-    if (a.imageUrl != null) {
-      if (!mounted) return;
-      await precacheImage(NetworkImage(a.imageUrl!), context)
-          .catchError((_) {});
-    }
-  }
 
   if (!mounted) return;
   Navigator.of(context).pushReplacement(
     MaterialPageRoute(builder: (_) => const HomeView()),
   );
+}
+
+Future<void> _preload() async {
+  try {
+    final service = NewsServices(Dio());
+    const categories = [
+      'general', 'technology', 'health',
+      'science', 'entertainment', 'sports', 'business',
+    ];
+
+    await Future.wait(categories.map((c) => service.getNews(category: c)));
+    if (!mounted) return;
+
+    await Future.wait(
+      ['technology', 'health', 'science', 'entertaiment', 'business']
+          .map((img) => precacheImage(AssetImage('assets/$img.jpeg'), context)),
+    );
+    if (!mounted) return;
+
+    final general = await service.getNews(category: 'general');
+    await Future.wait(
+      general
+          .take(8)
+          .where((a) => a.imageUrl != null)
+          .map((a) => precacheImage(NetworkImage(a.imageUrl!), context)
+              .catchError((_) {})),
+    );
+  } catch (_) {}
 }
   @override
 Widget build(BuildContext context) {

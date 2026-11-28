@@ -13,8 +13,7 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   int refreshKey = 0;
-
-  Future<void> _refresh() async {
+Future<void> _refresh() async {
     await NewsServices(Dio())
         .getNews(category: widget.category, forceRefresh: true);
     setState(() => refreshKey++);

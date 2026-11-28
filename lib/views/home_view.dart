@@ -27,6 +27,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
+        
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         title: const Row(

@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 5 , left: 2),
         width: 140,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
